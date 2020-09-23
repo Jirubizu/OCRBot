@@ -25,7 +25,6 @@ namespace OCRBot.Services
             
             var res = await http.GetJArrayAsync(
                 $"{config.Config.TranslateBaseUrl}sl={from}&tl={to}&dt=t&q={text}");
-            Console.WriteLine($"{config.Config.TranslateBaseUrl}sl={from}&tl={to}&dt=t&q={text}");
             return res;
         }
 
@@ -38,7 +37,7 @@ namespace OCRBot.Services
             {
                 EmbedBuilder embed = new EmbedBuilder
                 {
-                    Color = Color.Teal,
+                    Color = Color.Gold,
                     Title = "Your Translation",
                     Fields = new List<EmbedFieldBuilder>
                     {

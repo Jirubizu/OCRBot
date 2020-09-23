@@ -18,7 +18,8 @@ namespace OCRBot.Modules
         [Remarks("All of the translation codes can be found here (Arabic=ara, Bulgarian=bul, Chinese(Simplified)=chs, Chinese(Traditional)=cht, Croatian = hrv, Czech = cze" +
                  "Danish = dan, Dutch = dut, English = eng, Finnish = fin, French = fre, German = ger, Greek = gre, Hungarian = hun, Korean = kor, Italian = ita, Japanese = jpn, " +
                  "Polish = pol, Portuguese = por, Russian = rus, Slovenian = slv, Spanish = spa, Swedish = swe, Turkish = tur\n\n" +
-                 "first arg is either a image url or a language code to translate from if an attachment is present, arg2 is the language code to translate from ")]
+                 "first arg is either a image url or a language code to translate from if an attachment is present, arg2 is the language code to translate from and should only be provided " +
+                 "if a url is passed as the first argument")]
         public async Task Ocr(string arg = null, string arg2 = null)
         {
             List<EmbedBuilder> pages;

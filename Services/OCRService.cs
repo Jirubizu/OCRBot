@@ -25,8 +25,7 @@ namespace OCRBot.Services
         {
             var res = await http.GetJsonAsync<OCRSpaceJson>(
                 $"https://api.ocr.space/parse/imageurl?apikey={config.Config.OcrToken}&url={imageUrl}");
-            Console.WriteLine($"https://api.ocr.space/parse/imageurl?apikey={config.Config.OcrToken}&url={imageUrl}");
-
+            
             if (res.IsErroredOnProcessing)
             {
                 return $"Errored with the following code: {res.OCRExitCode}";

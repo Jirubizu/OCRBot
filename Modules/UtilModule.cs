@@ -74,6 +74,7 @@ namespace OCRBot.Modules
             await ReplyAsync("", false, embed.Build());
         }
 
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("prefix"), Summary("Change the prefix of the bot")]
         public async Task Prefix(string prefix, int random, char x)
         {
