@@ -76,7 +76,7 @@ namespace OCRBot.Modules
 
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command("prefix"), Summary("Change the prefix of the bot")]
-        public async Task Prefix(string prefix, int random, char x)
+        public async Task Prefix(string prefix)
         {
             var guild = await Database.LoadRecordsByGuildId(Context.Guild.Id);
             guild.Prefix = prefix;
