@@ -5,11 +5,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
+using OCRBot.OCRBotCustoms;
 using OCRBot.Services;
 
 namespace OCRBot.Modules
 {
-    public class OcrModule : ModuleBase<ShardedCommandContext>
+    public class OcrModule : OCRBotCustomModule
     {
         public PaginationService Paging { get; set; }
         public OCRService OcrService { get; set; }
@@ -23,9 +24,11 @@ namespace OCRBot.Modules
         public async Task Ocr(string arg = null, string arg2 = null)
         {
             List<EmbedBuilder> pages;
+            const string regex = "(http(s?):)|([/|.|\\w|\\s])*\\.(?:jpe?g|gif|png)";
+            
             if (TryGetAttachment(Context, out string attachmentUrl))
             {
-                if (!Regex.IsMatch(attachmentUrl, "(http(s?):)|([/|.|\\w|\\s])*\\.(?:jpe?g|gif|png)")) return;
+                if (!Regex.IsMatch(attachmentUrl, regex)) return;
                 if (arg != null)
                 {
                     pages = await OcrService.OcrTranslate(attachmentUrl, arg);
@@ -36,7 +39,7 @@ namespace OCRBot.Modules
                     return;
                 }
             }
-            else if (arg != null &&  Regex.IsMatch(arg, "(http(s?):)|([/|.|\\w|\\s])*\\.(?:jpe?g|gif|png)"))
+            else if (arg != null &&  Regex.IsMatch(arg, regex))
             {
                 if (arg2 != null)
                 {
@@ -57,29 +60,6 @@ namespace OCRBot.Modules
 
             PaginatedMessage paginator = new PaginatedMessage(pages, "OCR Translated", Color.Teal, Context.User, new AppearanceOptions{Timeout = TimeSpan.FromMinutes(10), Style = DisplayStyle.Minimal});
             await Paging.SendMessageAsync(Context.Channel, paginator);
-        }
-        
-        private bool TryGetAttachment(ShardedCommandContext context, out string result)
-        {
-            try
-            {
-                var attachment = context.Message.Attachments.FirstOrDefault();
-                if (attachment != null && attachment.Width > 0 && attachment.Height > 0)
-                {
-                    result = attachment.Url;
-                    return true;
-                }
-                
-                result = null;
-                return false;
-            }
-            catch
-            {
-                // ignored
-            }
-
-            result =  null;
-            return false;
         }
     }
 }

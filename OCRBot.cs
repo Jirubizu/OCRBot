@@ -39,6 +39,7 @@ namespace OCRBot
             await client.StartAsync();
             
             client.Log += LogAsync;
+            await client.SetActivityAsync(new Game("run ;help to get started", ActivityType.CustomStatus));
 
             var services = SetupServices();
             

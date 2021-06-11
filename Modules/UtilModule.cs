@@ -42,9 +42,9 @@ namespace OCRBot.Modules
                 Title = "Bot Statistics",
                 Fields = new List<EmbedFieldBuilder>
                 {
-                    new EmbedFieldBuilder {Name = "Uptime", Value = Uptime, IsInline = true},
-                    new EmbedFieldBuilder {Name = "Users", Value = UserSize, IsInline = true},
-                    new EmbedFieldBuilder {Name = "Servers", Value = Context.Client.Guilds.Count, IsInline = true},
+                    new() {Name = "Uptime", Value = Uptime, IsInline = true},
+                    new() {Name = "Users", Value = UserSize, IsInline = true},
+                    new() {Name = "Servers", Value = Context.Client.Guilds.Count, IsInline = true},
                 },
                 Color = Color.Gold
             };
@@ -74,7 +74,7 @@ namespace OCRBot.Modules
             await ReplyAsync("", false, embed.Build());
         }
 
-        [RequireUserPermission(GuildPermission.Administrator)]
+        [RequireUserPermission(GuildPermission.ManageMessages)]
         [Command("prefix"), Summary("Change the prefix of the bot")]
         public async Task Prefix(string prefix)
         {
@@ -82,6 +82,12 @@ namespace OCRBot.Modules
             guild.Prefix = prefix;
             await Database.UpdateGuild(guild);
             await ReplyAsync("Prefix updated");
+        }
+
+        [Command("support"), Summary("Displays a link where issues and support can be received.")]
+        public async Task Support()
+        {
+            await ReplyAsync("https://github.com/Jirubizu/OCRBot/issues");
         }
     }
 }
